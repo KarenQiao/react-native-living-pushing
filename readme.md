@@ -25,7 +25,7 @@ react-native link react-native-living-pushing
 
 3.[禁止bitcode](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/40318/155106684221041_zh-CN.png)
 
-4.需要引用aliyun SDK进入项目：General -> Embedded Binaries
+4.从 ```{project src}/node_modules/react-native-living-pushing/ios/lib ```需要引用aliyun SDK进入项目：General -> Embedded Binaries
 
     - AlivcLibFace.framework
     - AlivcLibBeauty.framework
