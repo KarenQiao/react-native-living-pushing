@@ -1,0 +1,24 @@
+{
+  "name": "react-native-living-pushing",
+  "version": "0.0.1",
+  "description": "基于阿里云直播sdk封装RN版本，包含直播、播放端，仅需要接入标签即可快速实现直播功能，支持互动，后续会增加打赏",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mark5566/react-native-living-pushing.git"
+  },
+  "keywords": [
+    "aliyun",
+    "living",
+    "pusher"
+  ],
+  "author": "mark",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mark5566/react-native-living-pushing/issues"
+  },
+  "homepage": "https://github.com/mark5566/react-native-living-pushing#readme"
+}
