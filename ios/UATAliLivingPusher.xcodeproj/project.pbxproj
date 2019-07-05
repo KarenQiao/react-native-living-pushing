@@ -301,6 +301,7 @@
 					"$(PROJECT_DIR)/lib",
 				);
 				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/../../node_modules/react-native/React/**",
 					"$(SRCROOT)/../../react-native/React/**",
 					"$(SRCROOT)/../../react-native-aliyun-living-pusher/ios/lib",
 				);
@@ -327,6 +328,7 @@
 					"$(PROJECT_DIR)/lib",
 				);
 				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/../../node_modules/react-native/React/**",
 					"$(SRCROOT)/../../react-native/React/**",
 					"$(SRCROOT)/../../react-native-aliyun-living-pusher/ios/lib",
 				);

@@ -8,52 +8,26 @@
 
 #import "UATAliLivingPusher.h"
 #import <AlivcLivePusher/AlivcLivePusher.h>
-
-@interface UATAliLivingPusher()<AlivcLivePusherInfoDelegate,
-                                AlivcLivePusherBGMDelegate,
-                                AlivcLivePusherErrorDelegate,
-                                AlivcLivePusherNetworkDelegate,
-                                AlivcLivePusherSnapshotDelegate,
-                                AlivcLivePusherCustomFilterDelegate,
-                                AlivcLivePusherCustomDetectorDelegate>
-
-@property (nonatomic,strong) AlivcLivePushConfig * pusherConfig ;
-@property (nonatomic,strong) AlivcLivePusher     * pusher ;
-@property (nonatomic,strong) UIView              * containerView;
+#import "UATPusherView.h"
+@interface UATAliLivingPusher()
+@property (nonatomic,strong) UATPusherView       * containerView;
 @end
 
 @implementation UATAliLivingPusher
 
 RCT_EXPORT_MODULE(AliLivingPusher)
 
--(AlivcLivePushConfig*)pusherConfig
-{
-    if(!_pusherConfig){
-        _pusherConfig = [[AlivcLivePushConfig alloc] init];
-        _pusherConfig.resolution = AlivcLivePushResolution540P;
-    }
-    return _pusherConfig;
-}
--(AlivcLivePusher*)pusher{
-    if(!_pusher){
-        _pusher = [[AlivcLivePusher alloc] initWithConfig:self.pusherConfig];
-        [_pusher setBGMDelegate:self];
-        [_pusher setInfoDelegate:self];
-        [_pusher setErrorDelegate:self];
-        [_pusher setNetworkDelegate:self];
-        [_pusher setSnapshotDelegate:self];
-        [_pusher setCustomFilterDelegate:self];
-        [_pusher setCustomDetectorDelegate:self];
-        [_pusher startPreview:self.containerView];
-    }
-    return _pusher;
-}
--(UIView *)containerView{
+
+
+-(UATPusherView *)containerView{
     if(!_containerView){
-        _containerView = [[UIView alloc] init];
-        _containerView.backgroundColor = [UIColor redColor];
+        _containerView = [[UATPusherView alloc] init];
     }
     return _containerView;
+}
+- (dispatch_queue_t)methodQueue
+{
+    return dispatch_get_main_queue();
 }
 - (UIView*)view
 {
@@ -62,23 +36,101 @@ RCT_EXPORT_MODULE(AliLivingPusher)
 
 
 
-#pragma mark event
+#pragma mark - 回调事件
+//背景音乐完成
+RCT_EXPORT_VIEW_PROPERTY(onBGMComplete, RCTBubblingEventBlock)
+//背景音乐下载播放超时
+RCT_EXPORT_VIEW_PROPERTY(onBGMDownloadTimeout, RCTBubblingEventBlock)
+//背景音乐开启失败
+RCT_EXPORT_VIEW_PROPERTY(onBGMOpenFail, RCTBubblingEventBlock)
+//背景音乐暂停播放
+RCT_EXPORT_VIEW_PROPERTY(onBGMPause, RCTBubblingEventBlock)
+//背景音乐当前播放进度
+RCT_EXPORT_VIEW_PROPERTY(onBGMProgress, RCTBubblingEventBlock)
+//背景音乐恢复播放
+RCT_EXPORT_VIEW_PROPERTY(onBGMResume, RCTBubblingEventBlock)
+//背景音乐开始播放
+RCT_EXPORT_VIEW_PROPERTY(onBGMStart, RCTBubblingEventBlock)
+//背景音乐停止播放
+RCT_EXPORT_VIEW_PROPERTY(onBGMStop, RCTBubblingEventBlock)
+//SDK错误回调
+RCT_EXPORT_VIEW_PROPERTY(onSDKError, RCTBubblingEventBlock)
+//系统错误回调
+RCT_EXPORT_VIEW_PROPERTY(onSystemError, RCTBubblingEventBlock)
+//推流链接失败
+RCT_EXPORT_VIEW_PROPERTY(onConnectFail, RCTBubblingEventBlock)
+//网络恢复
+RCT_EXPORT_VIEW_PROPERTY(onConnectResume, RCTBubblingEventBlock)
+//连接被断开
+RCT_EXPORT_VIEW_PROPERTY(onConnectLost, RCTBubblingEventBlock)
+//网络差回调
+RCT_EXPORT_VIEW_PROPERTY(onNetworkPoor, RCTBubblingEventBlock)
+//推流URL的鉴权时长即将过期(将在过期前1min内发送此回调)
+RCT_EXPORT_VIEW_PROPERTY(onPushURLAuthenticationOverdue, RCTBubblingEventBlock)
+//重连失败回调
+RCT_EXPORT_VIEW_PROPERTY(onReconnectError, RCTBubblingEventBlock)
+//重连开始回调
+RCT_EXPORT_VIEW_PROPERTY(onReconnectStart, RCTBubblingEventBlock)
+//重连成功回调
+RCT_EXPORT_VIEW_PROPERTY(onReconnectSuccess, RCTBubblingEventBlock)
+//发送数据超时
+RCT_EXPORT_VIEW_PROPERTY(onSendDataTimeout, RCTBubblingEventBlock)
+//发送SEI Message 通知
+RCT_EXPORT_VIEW_PROPERTY(onSendSEIMessage, RCTBubblingEventBlock)
+//截图
+RCT_EXPORT_VIEW_PROPERTY(onSnapShot, RCTBubblingEventBlock)
+//外置美颜滤镜创建回调
+RCT_EXPORT_VIEW_PROPERTY(onCreateOutBeauty, RCTBubblingEventBlock)
+//通知外置滤镜销毁回调
+RCT_EXPORT_VIEW_PROPERTY(onDestoryOutBeauty, RCTBubblingEventBlock)
+//外置美颜滤镜开关回调
+RCT_EXPORT_VIEW_PROPERTY(onBeautySwitchOn, RCTBubblingEventBlock)
+//外置美颜滤镜更新参数回调
+RCT_EXPORT_VIEW_PROPERTY(onUpdateParams, RCTBubblingEventBlock)
+
+//外置人脸检测创建回调
+RCT_EXPORT_VIEW_PROPERTY(onCreateDetector, RCTBubblingEventBlock)
+//外置人脸检测销毁回调
+RCT_EXPORT_VIEW_PROPERTY(onDestoryDetector, RCTBubblingEventBlock)
+//外置人脸检测处理回调
+RCT_EXPORT_VIEW_PROPERTY(onDetectorProcess, RCTBubblingEventBlock)
+//开始预览
+RCT_EXPORT_VIEW_PROPERTY(onPreviewStarted, RCTBubblingEventBlock)
+//停止预览
+RCT_EXPORT_VIEW_PROPERTY(onPreviewStoped, RCTBubblingEventBlock)
+//获取到第一帧
+RCT_EXPORT_VIEW_PROPERTY(onFirstFramePreviewed, RCTBubblingEventBlock)
+//开始推流回调
+RCT_EXPORT_VIEW_PROPERTY(onPushStarted, RCTBubblingEventBlock)
+//暂停推流
+RCT_EXPORT_VIEW_PROPERTY(onPushPaused, RCTBubblingEventBlock)
+//恢复推流
+RCT_EXPORT_VIEW_PROPERTY(onPushResumed, RCTBubblingEventBlock)
+//重新开始推流
+RCT_EXPORT_VIEW_PROPERTY(onPushRestart, RCTBubblingEventBlock)
+//停止推流
+RCT_EXPORT_VIEW_PROPERTY(onPushStoped, RCTBubblingEventBlock)
+
+
+
+
+
+#pragma mark 主动事件
 //开始预览
 RCT_EXPORT_METHOD(startPreview){
-    RCTLog(@"\n\n=========click start pre");
-    [self.pusher startPreview:self.containerView];
+    [self.containerView startPreview];
 }
 //添加水印接口
 RCT_EXPORT_METHOD(addWatermarkWithPath:(NSString*)path x:(float)x y:(float)y width:(float)width){
-    [self.pusherConfig addWatermarkWithPath:path watermarkCoordX:x watermarkCoordY:y watermarkWidth:width];
+    [self.containerView addWatermarkWithPath:path x:x y:y width:width];
 }
 //去除水印
 RCT_EXPORT_METHOD(removeWatermarkWithPath:(NSString*)path){
-    [self.pusherConfig removeWatermarkWithPath:path];
+    [self.containerView removeWatermarkWithPath:path];
 }
 //获取所有水印信息
 RCT_EXPORT_METHOD(getAllWatermarks:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject){
-    NSArray<NSDictionary*>*marks= [self.pusherConfig getAllWatermarks];
+    NSArray<NSDictionary*>*marks= [self.containerView getAllWatermarks];
     if(marks){
         resolve(marks);
     }else{
@@ -87,294 +139,88 @@ RCT_EXPORT_METHOD(getAllWatermarks:(RCTPromiseResolveBlock)resolve reject:(RCTPr
 }
 //开始推流
 RCT_EXPORT_METHOD(startPusher:(NSString*)url){
-    [self.pusher startPushWithURL:url];
+    [self.containerView startPushWithURL:url];
 }
 //暂停推流
 RCT_EXPORT_METHOD(pausePusher){
-    [self.pusher pause];
+    [self.containerView pause];
 }
 //恢复推流
 RCT_EXPORT_METHOD(resumePusher){
-    [self.pusher resume];
+    [self.containerView resume];
 }
 //重新推流
 RCT_EXPORT_METHOD(restartPusher){
-    [self.pusher restartPush];
+    [self.containerView restartPush];
 }
 //开启美颜
 RCT_EXPORT_METHOD(switchBeautyOn:(bool)on){
-    [self.pusherConfig setBeautyOn:on];
+    [self.containerView switchBeautyOn:on];
 }
 //美白
 RCT_EXPORT_METHOD(setBeautyWhite:(int)white){
-    [self.pusherConfig setBeautyWhite:white];
+    [self.containerView setBeautyWhite:white];
 }
 //磨皮
 RCT_EXPORT_METHOD(setBeautyBuffing:(int)buffing){
-    [self.pusherConfig setBeautyBuffing:buffing];
+    [self.containerView setBeautyBuffing:buffing];
 }
 //红润
 RCT_EXPORT_METHOD(setBeautyRuddy:(int)ruddy){
-    [self.pusherConfig setBeautyRuddy:ruddy];
+    [self.containerView setBeautyRuddy:ruddy];
 }
 //腮红
 RCT_EXPORT_METHOD(setCheekPink:(int)pink){
-    [self.pusherConfig setBeautyCheekPink:pink];
+    [self.containerView setBeautyCheekPink:pink];
 }
 //瘦脸
 RCT_EXPORT_METHOD(setThinFace:(int)face){
-    [self.pusherConfig setBeautyThinFace:face];
+    [self.containerView setThinFace:face];
 }
 //收下吧
 RCT_EXPORT_METHOD(setShortenFace:(int)face){
-    [self.pusherConfig setBeautyShortenFace:face];
+    [self.containerView setShortenFace:face];
 }
 //大眼
 RCT_EXPORT_METHOD(setBigEye:(int)bigEye){
-    [self.pusherConfig setBeautyBigEye:bigEye];
+    [self.containerView setBigEye:bigEye];
 }
 //切换q相机
 RCT_EXPORT_METHOD(switchCameraType){
-    [self.pusher switchCamera];
+    [self.containerView switchCameraType];
 }
 //闪光弹
 RCT_EXPORT_METHOD(flash:(bool)flash){
-    [self.pusher setFlash:flash];
+    [self.containerView flash:flash];
 }
 //对焦
 RCT_EXPORT_METHOD(setAutoFocus:(bool)focus){
-    [self.pusher setAutoFocus:focus];
+    [self.containerView setAutoFocus:focus];
 }
 //手动对焦
 RCT_EXPORT_METHOD(setFocusPointX:(float)x y:(float)y needAuto:(bool)needAuto){
-    [self.pusher focusCameraAtAdjustedPoint:CGPointMake(x, y) autoFocus:needAuto];
+//    [self.pusher focusCameraAtAdjustedPoint:CGPointMake(x, y) autoFocus:needAuto];
+    [self.containerView setFocusPointX:x y:y needAuto:needAuto];
 }
 //设置缩放倍数
 RCT_EXPORT_METHOD(setZoom:(float)zoom){
-    [self.pusher setZoom:zoom];
+    [self.containerView setZoom:zoom];
 }
 //获取缩放倍数
 RCT_EXPORT_METHOD(getZoomResolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject){
-    float zoom = [self.pusher getCurrentZoom];
+    float zoom = [self.containerView getCurrentZoom];
     resolve(@{@"zoom":@(zoom)});
 }
 //获取最大变焦数
 RCT_EXPORT_METHOD(getMaxZoomResolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject){
-    float maxZoom = [self.pusher getMaxZoom];
+    float maxZoom = [self.containerView getMaxZoom];
     resolve(@{@"maxZoom":@(maxZoom)});
+    
 }
 //截图
 RCT_EXPORT_METHOD(snapShot:(int)count duration:(int)duration){
-    [self.pusher snapshot:count interval:duration];
-}
-//
-
-#pragma mark delegate
-- (void)onPreviewStarted:(AlivcLivePusher *)pusher;
-{
-    self.onPreviewStarted(@{});
+    [self.containerView snapShot:count duration:duration];
 }
 
-/**
- 停止预览回调
- 
- @param pusher 推流AlivcLivePusher
- */
-- (void)onPreviewStoped:(AlivcLivePusher *)pusher;
-{
-    self.onPreviewStoped(@{});
-}
-
-/**
- 渲染第一帧回调
- 
- @param pusher 推流AlivcLivePusher
- */
-- (void)onFirstFramePreviewed:(AlivcLivePusher *)pusher;
-{
-    self.onFirstFramePreviewed(@{});
-}
-
-/**
- 推流开始回调
- 
- @param pusher 推流AlivcLivePusher
- */
-- (void)onPushStarted:(AlivcLivePusher *)pusher;
-{
-    self.onPushStarted(@{});
-}
-
-/**
- 推流暂停回调
- 
- @param pusher 推流AlivcLivePusher
- */
-- (void)onPushPaused:(AlivcLivePusher *)pusher;
-{
-    self.onPushPaused(@{});
-}
-
-/**
- 推流恢复回调
- 
- @param pusher 推流AlivcLivePusher
- */
-- (void)onPushResumed:(AlivcLivePusher *)pusher;
-{
-    self.onPushResumed(@{});
-}
-
-/**
- 重新推流回调
- 
- @param pusher 推流AlivcLivePusher
- */
-- (void)onPushRestart:(AlivcLivePusher *)pusher;
-{
-    self.onPushRestart(@{});
-}
-
-/**
- 推流停止回调
- 
- @param pusher 推流AlivcLivePusher
- */
-- (void)onPushStoped:(AlivcLivePusher *)pusher;
-{
-    self.onPushStoped(@{});
-}
-- (void)onCompleted:(AlivcLivePusher *)pusher {
-    self.onBGMComplete(@{});
-}
-
-- (void)onDownloadTimeout:(AlivcLivePusher *)pusher {
-    self.onBGMDownloadTimeout(@{});
-}
-
-- (void)onOpenFailed:(AlivcLivePusher *)pusher {
-    self.onBGMOpenFail(@{});
-}
-
-- (void)onPaused:(AlivcLivePusher *)pusher {
-    self.onBGMPause(@{});
-}
-
-- (void)onProgress:(AlivcLivePusher *)pusher progress:(long)progress duration:(long)duration {
-    self.onBGMProgress(@{@"progress":@(progress),@"duration":@(duration)});
-}
-
-- (void)onResumed:(AlivcLivePusher *)pusher {
-    self.onBGMResume(@{});
-}
-
-- (void)onStarted:(AlivcLivePusher *)pusher {
-    self.onBGMStart(@{});
-}
-
-- (void)onStoped:(AlivcLivePusher *)pusher {
-    self.onBGMStop(@{});
-}
-
-- (void)onSDKError:(AlivcLivePusher *)pusher error:(AlivcLivePushError *)error {
-    self.onSDKError(@{@"code":@(error.errorCode),@"desc":error.errorDescription});
-}
-
-- (void)onSystemError:(AlivcLivePusher *)pusher error:(AlivcLivePushError *)error {
-    self.onSystemError(@{@"code":@(error.errorCode),@"desc":error.errorDescription});
-}
-
-- (void)onConnectFail:(AlivcLivePusher *)pusher error:(AlivcLivePushError *)error {
-    self.onConnectFail(@{@"code":@(error.errorCode),@"desc":error.errorDescription});
-}
-
-- (void)onConnectRecovery:(AlivcLivePusher *)pusher {
-    self.onConnectResume(@{});
-}
-
-- (void)onConnectionLost:(AlivcLivePusher *)pusher {
-    self.onConnectLost(@{});
-}
-
-- (void)onNetworkPoor:(AlivcLivePusher *)pusher {
-    self.onNetworkPoor(@{});
-}
-
-- (NSString *)onPushURLAuthenticationOverdue:(AlivcLivePusher *)pusher {
-    self.onPushURLAuthenticationOverdue(@{});
-    return @"";
-}
-
-- (void)onReconnectError:(AlivcLivePusher *)pusher error:(AlivcLivePushError *)error {
-    self.onReconnectError(@{@"code":@(error.errorCode),@"desc":error.errorDescription});
-}
-
-- (void)onReconnectStart:(AlivcLivePusher *)pusher {
-    self.onReconnectStart(@{});
-}
-
-- (void)onReconnectSuccess:(AlivcLivePusher *)pusher {
-    self.onReconnectSuccess(@{});
-}
-
-- (void)onSendDataTimeout:(AlivcLivePusher *)pusher {
-    self.onSendDataTimeout(@{});
-}
-
-- (void)onSendSeiMessage:(AlivcLivePusher *)pusher {
-    self.onSendSEIMessage(@{});
-}
-
-- (void)onSnapshot:(AlivcLivePusher *)pusher image:(UIImage *)image {
-    self.onSnapShot(@{@"img":image});
-}
-
-- (void)onCreate:(AlivcLivePusher *)pusher context:(void *)context {
-    self.onCreateOutBeauty(@{});
-}
-
-- (void)onDestory:(AlivcLivePusher *)pusher {
-    self.onDestoryOutBeauty(@{});
-}
-
-//- (int)onProcess:(AlivcLivePusher *)pusher texture:(int)texture textureWidth:(int)width textureHeight:(int)height extra:(long)extra {
-//    <#code#>
-//}
-
-- (void)switchOn:(AlivcLivePusher *)pusher on:(bool)on {
-//    dispatch_async(dispatch_get_main_queue(), ^{
-//        self.onBeautySwitchOn(@{@"isON":@(on)});
-//    });
-    self.onBeautySwitchOn(@{@"isON":@(on)});
-}
-
-- (void)updateParam:(AlivcLivePusher *)pusher buffing:(float)buffing whiten:(float)whiten pink:(float)pink cheekpink:(float)cheekpink thinface:(float)thinface shortenface:(float)shortenface bigeye:(float)bigeye {
-    self.onUpdateParams(@{@"buffing":@(buffing),
-                          @"whiten" :@(whiten),
-                          @"pink"   :@(pink),
-                          @"cheekpink":@(cheekpink),
-                          @"thinface":@(thinface),
-                          @"bigeye":@(bigeye),
-                          });
-}
-
-- (void)onCreateDetector:(AlivcLivePusher *)pusher {
-    self.onCreateDetector(@{});
-}
-
-- (void)onDestoryDetector:(AlivcLivePusher *)pusher {
-    self.onDestoryDetector(@{});
-}
-
-- (long)onDetectorProcess:(AlivcLivePusher *)pusher data:(long)data w:(int)w h:(int)h rotation:(int)rotation format:(int)format extra:(long)extra {
-    self.onDetectorProcess(@{@"data":@(data),
-                             @"w":@(w),
-                             @"h":@(h),
-                             @"rotation":@(rotation),
-                             @"format":@(format),
-                             @"extra":@(extra),
-                             });
-    return 0;
-}
 
 @end
