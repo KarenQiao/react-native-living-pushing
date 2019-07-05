@@ -1,4 +1,4 @@
-# 封装使用[阿里云直播SDK](https://help.aliyun.com/document_detail/94821.html?spm=a2c4g.11186623.6.850.6adb60926lK3w7)
+# 阿里云直播SDK-RN版[阿里云直播SDK](https://help.aliyun.com/document_detail/94821.html?spm=a2c4g.11186623.6.850.6adb60926lK3w7)
 
 **注意仅支持IOS8以上，不支持安卓**
 
@@ -38,20 +38,20 @@ react-native link react-native-living-pushing
 
 ### 使用
 
-    import {AliLivingPusher} from 'react-native-living-pusher'
+    import Pusher from 'react-native-living-pusher'
 
 
 在渲染函数内容直接使用AliLivingPusher标签，并且设置宽高等样式
    
-    <AliLivingPusher 
+    <Pusher 
         {其他属性值}
         style={{width:'100%',height:'100%'}}
         />
 
 该组件需要手动出发开始预览、开始推流等事件，直接使用
 
-    AliLivingPusher.startPreview();
-    AliLivingPusher.startPusher('推流目的地址');
+    Pusher.startPreview();
+    Pusher.startPusher('推流目的地址');
     
     
 
