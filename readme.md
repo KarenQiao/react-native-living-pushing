@@ -63,7 +63,7 @@ react-native link react-native-living-pushing
 |函数名称|参数|函数功能说明|
 |-|-|-|
 |startPreview()|null|开始推流|
-|addWatermarkWithPath(path:String,x:Number,y:Number,width:Number)|path:水印内容;<br>x:距离屏幕左边；<br>y：距离屏幕上方；<br>width：水印宽度|添加水印|
+|addWatermarkWithPath(path:String,<br>x:Number,<br>y:Number,<br>width:Number)|path:水印内容;<br>x:距离屏幕左边；<br>y：距离屏幕上方；<br>width：水印宽度|添加水印|
 |removeWatermarkWithPath(path:String)|path:需要移除的水印|移除指定水印|
 |startPushWithURL(url:String)|url:推流地址|开始推流|
 |pause()|null|暂停推流|
@@ -80,7 +80,7 @@ react-native link react-native-living-pushing
 |switchCameraType()|null|切换摄像头|
 |flash(isOn:Boolean)|isOn:开/关闪光灯|开启/关闭闪光灯|
 |setAutoFocus(isAuto:Boolean)|isAuto:是否自动对焦|设置是否自动对焦|
-|setFocusPointX(x:Number,y:Number,needAuto:Boolean)|x:对焦x坐标;<br>y:对焦y坐标;<br>needAuto:对焦完成是否自动对焦|手动设置对焦点|
+|setFocusPointX(x:Number,<br>y:Number,<br>needAuto:Boolean)|x:对焦x坐标;<br>y:对焦y坐标;<br>needAuto:对焦完成是否自动对焦|手动设置对焦点|
 |setZoom(zoom:Number)|zoom:缩放倍率|设置缩放倍率|
 |snapShot(count:Number,duration:Number)|count:;<br>duration:;|截图|
 |getMaxZoom():Promise<Number>|return :异步返回最大变焦值|异步获取最大变焦值|
@@ -91,34 +91,34 @@ react-native link react-native-living-pushing
 #### PROPS回调属性说明
 |属性值|参数值|触发事件节点|
 |-|-|-|
-|onBGMComplete|null|背景音乐播放完毕|
-|onBGMDownloadTimeout|null|背景音乐下载播放超时|
-|onBGMOpenFail|null|背景音乐开启失败|
-|onBGMPause|null|背景音乐暂停播放|
-|onBGMProgress|(progress:Number,duration:Number)|背景音乐播放进度变化|
-|onBGMResume|null|背景音乐恢复播放|
-|onBGMStart|null|背景音乐开始播放|
-|onBGMStop|null|背景音乐停止播放|
-|onSDKError|(error:AliLivingPusherError)|sdk发生异常回调|
-|onSystemError|(error:AliLivingPusherError)|系统发生异常回调|
-|onConnectFail|(error:AliLivingPusherError)|推流连接失败|
-|onConnectResume|null|网络恢复正常|
-|onConnectLost|null|网络被断开|
-|onNetworkPoor|null|网络差回调|
-|onPushURLAuthenticationOverdue|return :返回新的推流地址|推流URL的鉴权时长即将过期(将在过期前1min内发送此回调)|
-|onReconnectError|(error:AliLivingPusherError)|重连失败回调|
-|onReconnectStart|null| 重连开始回调|
-|onReconnectSuccess|null| 重连成功回调|
-|onSendDataTimeout|null|发送数据超时|
+|onBGMComplete|()=>{}|背景音乐播放完毕|
+|onBGMDownloadTimeout|()=>{}|背景音乐下载播放超时|
+|onBGMOpenFail|()=>{}|背景音乐开启失败|
+|onBGMPause|()=>{}|背景音乐暂停播放|
+|onBGMProgress|(progress:Number,duration:Number)=>{}|背景音乐播放进度变化|
+|onBGMResume|()=>{}|背景音乐恢复播放|
+|onBGMStart|()=>{}|背景音乐开始播放|
+|onBGMStop|()=>{}|背景音乐停止播放|
+|onSDKError|(error:AliLivingPusherError)=>{}|sdk发生异常回调|
+|onSystemError|(error:AliLivingPusherError)=>{}|系统发生异常回调|
+|onConnectFail|(error:AliLivingPusherError)=>{}|推流连接失败|
+|onConnectResume|()=>{}|网络恢复正常|
+|onConnectLost|()=>{}|网络被断开|
+|onNetworkPoor|()=>{}|网络差回调|
+|onPushURLAuthenticationOverdue|():String=>{}<br>return :返回新的推流地址|推流URL的鉴权时长即将过期(将在过期前1min内发送此回调)|
+|onReconnectError|(error:AliLivingPusherError)=>{}|重连失败回调|
+|onReconnectStart|()=>{}| 重连开始回调|
+|onReconnectSuccess|()=>{}| 重连成功回调|
+|onSendDataTimeout|()=>{}|发送数据超时|
 |onSendSEIMessage|()=>{}|发送SEI Message 通知|
 |onSnapShot|(img:React.ReactNode)=>{}|截图|
 |onCreateOutBeauty|(context:Object)=>{}|外置美颜滤镜创建回调|
 |onDestoryOutBeauty|()=>{}|通知外置滤镜销毁回调|
 |onBeautySwitchOn|(isOn:Boolean)=>{}|外置美颜滤镜开关回调|
-|onUpdateParams|(buffing:Number,whiten:Number,pink:Number,cheekpink:Number,thinface:Number,shortenface:Number,bigeye:Number)=>{}|外置美颜滤镜更新参数回调|
+|onUpdateParams|(buffing:Number,<br>whiten:Number,<br>pink:Number,<br>cheekpink:Number,<br>thinface:Number,<br>shortenface:Number,<br>bigeye:Number)=>{}|外置美颜滤镜更新参数回调|
 |onCreateDetector|()=>{}|外置人脸检测创建回调|
 |onDestoryDetector|()=>{}|外置人脸检测销毁回调|
-|onDetectorProcess|(data:Number,w:Number,h:Number,rotation:Number,format:Number,extra:Number)=>{}|外置人脸检测处理回调|
+|onDetectorProcess|(data:Number,<br>w:Number,<br>h:Number,<br>rotation:Number,<br>format:Number,<br>extra:Number)=>{}|外置人脸检测处理回调|
 |onPreviewStarted|()=>{}|开始预览|
 |onPreviewStoped|()=>{}|停止预览|
 |onFirstFramePreviewed|()=>{}|获取到第一帧|
