@@ -1,6 +1,6 @@
 {
   "name": "react-native-living-pushing",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "基于阿里云直播sdk封装RN版本，包含直播、播放端，仅需要接入标签即可快速实现直播功能，支持互动，后续会增加打赏",
   "main": "index.js",
   "scripts": {

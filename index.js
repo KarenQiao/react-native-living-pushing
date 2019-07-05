@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import { ViewStyle,  } from "react-native";
 import { requireNativeComponent,NativeModules } from 'react-native';
 
-const AliLivingPusher =  requireNativeComponent('AliLivingPusher',null);
-
-export {AliLivingPusher}
+//用于主动调用事件
+export const AliLivingPusher = NativeModules.AliLivingPusher;
+//用于UI显示
+export const PusherModule    = requireNativeComponent('AliLivingPusher',null);
 
 
 type Props = {
@@ -139,7 +140,7 @@ export class Pusher extends Component<Props,State>{
 
 
     render(){
-        return <AliLivingPusher {...this.props}/>
+        return <PusherModule {...this.props}/>
     }
 
 }
