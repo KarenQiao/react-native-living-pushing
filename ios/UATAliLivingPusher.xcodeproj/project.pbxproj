@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4DF627B422CF350E008A00F4 /* UATPusherView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF627B222CF350E008A00F4 /* UATPusherView.m */; };
 		C6092C0722AE6EE100536AC1 /* UATAliLivingPusher.m in Sources */ = {isa = PBXBuildFile; fileRef = C6092C0622AE6EE100536AC1 /* UATAliLivingPusher.m */; };
 		C6FCF1A822AF5373008605A7 /* AlivcLibRtmp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6FDF7D022AF4E7900FC294F /* AlivcLibRtmp.framework */; };
 		C6FCF1A922AF537B008605A7 /* AlivcLivePusher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6FDF7D222AF4E7900FC294F /* AlivcLivePusher.framework */; };
@@ -29,6 +30,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4DF627B222CF350E008A00F4 /* UATPusherView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UATPusherView.m; sourceTree = "<group>"; };
+		4DF627B322CF350E008A00F4 /* UATPusherView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UATPusherView.h; sourceTree = "<group>"; };
 		C6092BF922AE6EBC00536AC1 /* libUATAliLivingPusher.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libUATAliLivingPusher.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6092C0522AE6EE100536AC1 /* UATAliLivingPusher.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UATAliLivingPusher.h; sourceTree = "<group>"; };
 		C6092C0622AE6EE100536AC1 /* UATAliLivingPusher.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UATAliLivingPusher.m; sourceTree = "<group>"; };
@@ -80,6 +83,8 @@
 		C6092BFB22AE6EBC00536AC1 /* UATAliLivingPusher */ = {
 			isa = PBXGroup;
 			children = (
+				4DF627B322CF350E008A00F4 /* UATPusherView.h */,
+				4DF627B222CF350E008A00F4 /* UATPusherView.m */,
 				C6092C0522AE6EE100536AC1 /* UATAliLivingPusher.h */,
 				C6092C0622AE6EE100536AC1 /* UATAliLivingPusher.m */,
 			);
@@ -164,6 +169,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4DF627B422CF350E008A00F4 /* UATPusherView.m in Sources */,
 				C6092C0722AE6EE100536AC1 /* UATAliLivingPusher.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
