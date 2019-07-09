@@ -2,6 +2,8 @@
 
 **注意仅支持IOS8以上，不支持安卓**
 
+    当前sdk版本：3.4.1
+
 ## 目录
 
 - [安装](#安装)
@@ -25,7 +27,18 @@ react-native link react-native-living-pushing
 
 3.[禁止bitcode](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/40318/155106684221041_zh-CN.png)
 
-4.从 ```{project src}/node_modules/react-native-living-pushing/ios/lib ```需要引用aliyun SDK进入项目：General -> Embedded Binaries
+4.在项目根目录下新建文件夹，用于放置阿里云依赖包：
+
+    - AlivcLibFace.framework
+    - AlivcLibBeauty.framework
+    - AliyunPlayerSDK.framework
+    - AliyunThirparty.framework
+    - AlivcLivePusher.framework
+    - AlivcLibRtmp.framework
+    - AlivcLibFaceResource.bundle
+    - AliyunLanguageSource.bundle
+
+5.从 ```{project src}/node_modules/react-native-living-pushing/ios/lib ```需要引用aliyun SDK进入项目：General -> Embedded Binaries
 
     - AlivcLibFace.framework
     - AlivcLibBeauty.framework
@@ -63,8 +76,6 @@ react-native link react-native-living-pushing
 |函数名称|参数|函数功能说明|
 |-|-|-|
 |startPreview()|null|开始推流|
-|addWatermarkWithPath(path:String,<br>x:Number,<br>y:Number,<br>width:Number)|path:水印内容;<br>x:距离屏幕左边；<br>y：距离屏幕上方；<br>width：水印宽度|添加水印|
-|removeWatermarkWithPath(path:String)|path:需要移除的水印|移除指定水印|
 |startPushWithURL(url:String)|url:推流地址|开始推流|
 |pause()|null|暂停推流|
 |resume()|null|暂停之后可以恢复推流|
@@ -81,11 +92,14 @@ react-native link react-native-living-pushing
 |flash(isOn:Boolean)|isOn:开/关闪光灯|开启/关闭闪光灯|
 |setAutoFocus(isAuto:Boolean)|isAuto:是否自动对焦|设置是否自动对焦|
 |setFocusPointX(x:Number,<br>y:Number,<br>needAuto:Boolean)|x:对焦x坐标;<br>y:对焦y坐标;<br>needAuto:对焦完成是否自动对焦|手动设置对焦点|
-|setZoom(zoom:Number)|zoom:缩放倍率|设置缩放倍率|
+|setZoom(zoom:Number)|zoom:缩放倍率|设置缩放倍率<br>缩放接口为增量设置，每次设置参数都是在当前基础上做增减，缩放倍数范围（1-3）|
 |snapShot(count:Number,duration:Number)|count:;<br>duration:;|截图|
 |getMaxZoom():Promise<Number>|return :异步返回最大变焦值|异步获取最大变焦值|
 |getCurrentZoom():Promise<Number>|return :异步返回当前变焦值|异步获取当前变焦值|
 |getAllWatermarks():Promise<Object[]>|return :异步返回所有水印信息|异步获取所有水印信息|
+
+**备注**：1.水印功能需要在初始化配置时设置；2.图片要求为png格式；3.图片需要在xcode路径下；4.最多支持3张
+若需要修改水印图，需要在文件`UATPusherView`的第50行内添加配置水印图片路径
 
 
 #### PROPS回调属性说明
@@ -114,14 +128,14 @@ react-native link react-native-living-pushing
 |onSnapShot|(img:React.ReactNode)=>{}|截图|
 |onCreateOutBeauty|(context:Object)=>{}|外置美颜滤镜创建回调|
 |onDestoryOutBeauty|()=>{}|通知外置滤镜销毁回调|
-|onBeautySwitchOn|(isOn:Boolean)=>{}|外置美颜滤镜开关回调|
+|   |(isOn:Boolean)=>{}|外置美颜滤镜开关回调|
 |onUpdateParams|(buffing:Number,<br>whiten:Number,<br>pink:Number,<br>cheekpink:Number,<br>thinface:Number,<br>shortenface:Number,<br>bigeye:Number)=>{}|外置美颜滤镜更新参数回调|
 |onCreateDetector|()=>{}|外置人脸检测创建回调|
 |onDestoryDetector|()=>{}|外置人脸检测销毁回调|
 |onDetectorProcess|(data:Number,<br>w:Number,<br>h:Number,<br>rotation:Number,<br>format:Number,<br>extra:Number)=>{}|外置人脸检测处理回调|
-|onPreviewStarted|()=>{}|开始预览|
+|onPreviewStarted|()=>{}|开始预览，开始预览事件触发|
 |onPreviewStoped|()=>{}|停止预览|
-|onFirstFramePreviewed|()=>{}|获取到第一帧|
+|onFirstFramePreviewed|()=>{}|获取到第一帧，预览成功获取第一帧图片回调|
 |onPushStarted|()=>{}|开始推流回调|
 |onPushPaused|()=>{}|暂停推流|
 |onPushResumed|()=>{}|恢复推流|

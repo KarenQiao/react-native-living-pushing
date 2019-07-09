@@ -16,9 +16,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface UATPusherView : UIView
 
-//测试方法
-@property (nonatomic,copy) RCTBubblingEventBlock onChange;
-
 
 //开始预览
 -(void)startPreview;
@@ -35,7 +32,7 @@ NS_ASSUME_NONNULL_BEGIN
 //重新开始推流
 -(void)restartPush;
 //美颜开关控制
--(void)switchBeautyOn:(bool)on;
+-(void)switchBeautyOn:(BOOL)on;
 //设置美白
 -(void)setBeautyWhite:(int)white;
 //设置磨皮
@@ -53,11 +50,11 @@ NS_ASSUME_NONNULL_BEGIN
 //切换相机
 -(void)switchCameraType;
 //闪光灯
--(void)flash:(bool)flash;
+-(void)flash:(BOOL)flash;
 //对焦
--(void)setAutoFocus:(bool)focus;
+-(void)setAutoFocus:(BOOL)focus;
 //手动对焦
--(void)setFocusPointX:(float)x y:(float)y needAuto:(bool)needAuto;
+-(void)setFocusPointX:(float)x y:(float)y needAuto:(BOOL)needAuto;
 //设置缩放倍率
 -(void)setZoom:(float)zoom;
 //截图

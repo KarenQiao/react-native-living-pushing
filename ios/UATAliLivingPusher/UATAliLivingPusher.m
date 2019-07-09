@@ -34,7 +34,7 @@ RCT_EXPORT_MODULE(AliLivingPusher)
     return self.containerView;
 }
 
-
+//RCT_EXPORT_VIEW_PROPERTY(name, NSString)
 
 #pragma mark - 回调事件
 //背景音乐完成
@@ -116,17 +116,21 @@ RCT_EXPORT_VIEW_PROPERTY(onPushStoped, RCTBubblingEventBlock)
 
 
 #pragma mark 主动事件
+
 //开始预览
 RCT_EXPORT_METHOD(startPreview){
     [self.containerView startPreview];
 }
-//添加水印接口
-RCT_EXPORT_METHOD(addWatermarkWithPath:(NSString*)path x:(float)x y:(float)y width:(float)width){
-    [self.containerView addWatermarkWithPath:path x:x y:y width:width];
+//添加水印接口;SDK提供了添加水印功能，并且最多支持添加多个水印，水印图片必须为png格式图片，目前最多支持3个水印
+RCT_EXPORT_METHOD(addWatermarkWithPath:(NSString*)path x:(CGFloat)x y:(CGFloat)y width:(CGFloat)width){
+    NSString * iconPath = [[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"iconfont"] ofType:@"png"];
+//    iconPath = @"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1562562507124&di=31e143e9a7ac8dfd5755b5d75941ee5f&imgtype=0&src=http%3A%2F%2Ft0.qlogo.cn%2Fmbloghead%2F93d07d6c269779f9f516%2F180";
+    [self.containerView addWatermarkWithPath:iconPath x:x y:y width:width];
 }
 //去除水印
 RCT_EXPORT_METHOD(removeWatermarkWithPath:(NSString*)path){
-    [self.containerView removeWatermarkWithPath:path];
+    NSString * iconPath = [[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"iconfont"] ofType:@"png"];
+    [self.containerView removeWatermarkWithPath:iconPath];
 }
 //获取所有水印信息
 RCT_EXPORT_METHOD(getAllWatermarks:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject){
@@ -154,7 +158,7 @@ RCT_EXPORT_METHOD(restartPusher){
     [self.containerView restartPush];
 }
 //开启美颜
-RCT_EXPORT_METHOD(switchBeautyOn:(bool)on){
+RCT_EXPORT_METHOD(switchBeautyOn:(BOOL)on){
     [self.containerView switchBeautyOn:on];
 }
 //美白
@@ -190,15 +194,15 @@ RCT_EXPORT_METHOD(switchCameraType){
     [self.containerView switchCameraType];
 }
 //闪光弹
-RCT_EXPORT_METHOD(flash:(bool)flash){
+RCT_EXPORT_METHOD(flash:(BOOL)flash){
     [self.containerView flash:flash];
 }
 //对焦
-RCT_EXPORT_METHOD(setAutoFocus:(bool)focus){
+RCT_EXPORT_METHOD(setAutoFocus:(BOOL)focus){
     [self.containerView setAutoFocus:focus];
 }
 //手动对焦
-RCT_EXPORT_METHOD(setFocusPointX:(float)x y:(float)y needAuto:(bool)needAuto){
+RCT_EXPORT_METHOD(setFocusPointX:(float)x y:(float)y needAuto:(BOOL)needAuto){
 //    [self.pusher focusCameraAtAdjustedPoint:CGPointMake(x, y) autoFocus:needAuto];
     [self.containerView setFocusPointX:x y:y needAuto:needAuto];
 }
@@ -214,7 +218,7 @@ RCT_EXPORT_METHOD(getZoomResolve:(RCTPromiseResolveBlock)resolve reject:(RCTProm
 //获取最大变焦数
 RCT_EXPORT_METHOD(getMaxZoomResolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject){
     float maxZoom = [self.containerView getMaxZoom];
-    resolve(@{@"maxZoom":@(maxZoom)});
+    resolve(@{@"zoom":@(maxZoom)});
     
 }
 //截图
